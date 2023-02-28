@@ -37,8 +37,9 @@
         </div>
     </div>
 </div>
+@endsection 
 
-<article class="postcard light yellow">
+{{-- <article class="postcard light yellow">
     <a class="postcard__img_link" href="#">
         <img class="postcard__img" src="https://picsum.photos/501/501" alt="Image Title" />
     </a>
@@ -60,4 +61,4 @@
         </ul>
     </div>
 </article>
-@endsection
+@endsection --}}
