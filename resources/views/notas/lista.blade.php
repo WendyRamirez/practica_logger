@@ -1,6 +1,61 @@
 @extends('layouts.app')
 @section('content')
 <div class="container">
+    <!DOCTYPE html>
+<html>
+<head>
+    <title>Notas</title>
+    <meta name="csrf-token" content="{{ csrf_token() }}">
+ 
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+ 
+  <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+ 
+  <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+ 
+  <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+  <script type="text/javascript">
+     var siteUrl = "{{url('/')}}";
+  </script>
+</head>
+<body>
+
+
+  <div class="card">
+    <div class="card-header text-center font-weight-bold">
+      <h2>GESTION DE NOTAS</h2>
+    </div>
+ 
+    <div class="card-body">
+      <form name="autocomplete-textbox" id="autocomplete-textbox" method="" action="#">
+       @csrf
+ 
+        <div class="form-group">
+          <label for="exampleInputEmail1">Search Note By Name</label>
+          <select name="tipo" class="form-control mr-sm-2" id="exampleFormControlSelect1">
+              <option>Buscar por tipo</option>
+              <option>nombre</option>
+              <option>detalle</option>
+              <option>id</option>
+            </select>
+        </div>
+        <div class="container-top mt-4">
+            <form class="form-inline">
+                <input type="search" id="nombre" name="nombre" class="form-control">
+          </form>
+          <div class="container-top mt-4">
+            <button class="btn mt-4 btn-outline-success my-2 my-sm-0" type="submit">Buscar</button>
+        </div>
+      </form>
+    </div>
+  </div>
+   
+</div>  
+  <script src="{{ asset('auto.js') }}"></script>
+</body>
+ 
+<br><br>
+</html>
     <div class="row justify-content-center">
         <div class="col-md-8">
             <div class="card">

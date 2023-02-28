@@ -5,30 +5,51 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Nota;
 
-
-class NotaController extends Controller
+class AutoCompleteController extends Controller
 {
     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        $usuarioEmail = auth()->user()->email;
-        $notas = Nota::where('usuario', $usuarioEmail)->paginate(5);
-        return view('notas.lista',compact('notas'));
+        
+        $nombre = $request->get('nombre');
+        $Nota = Nota::where('nombre','LIKE',"%$nombre%")->paginate(5);
+        return view('notas.lista', compact('Nota'));
 
+
+        $apellido = $request->get('buscarporapellido');
+
+        $Agenda = Agenda::nombres($nombre)->apellidos($apellido)->paginate(5);
     }
 
     /**
      * Show the form for creating a new resource.
      *
      * @return \Illuminate\Http\Response
+     * 
      */
+    public function autocomplete(Request $request)
+    {
+        $res = Nota::select("nombre")
+                ->where("nombre","LIKE","%{$request->term}%")
+                ->get();
+    
+        return response()->json($res);
+    }
+
+    /**
+     * Show the form for creating a new resource.
+     *
+     * @return \Illuminate\Http\Response
+     * 
+     */
+
     public function create()
     {
-        return view('notas.agregar');
+        //
     }
 
     /**
@@ -39,13 +60,7 @@ class NotaController extends Controller
      */
     public function store(Request $request)
     {
-        $nota = new Nota();
-        $nota->nombre = $request->nombre;
-        $nota->descripcion = $request->descripcion;
-        $nota->usuario = auth()->user()->email;
-        $nota->save();
-
-        return back()->with('mensaje', 'Nota Agregada!');
+        //
     }
 
     /**
@@ -93,8 +108,5 @@ class NotaController extends Controller
         //
     }
 
-    public function __construct()
-    {
-        $this->middleware('auth');
-    }
+
 }
