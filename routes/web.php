@@ -35,11 +35,13 @@ Route::middleware('auth')->group(function () {
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
     Route::resource('/notas', 'App\Http\Controllers\NotaController');
+    Route::get('/notas/{nota}/editar', 'App\Http\Controllers\NotaController')->name('notas.edit');
+    Route::put('/notas/{nota}', 'App\Http\Controllers\NotaController')->name('notas.update');
+    Route::delete('/notas/{nota}','App\Http\Controllers\NotaController')->name('notas.destroy');
     Route::get('contact', [App\Http\Controllers\ContactFormController::class, 'form'])->name('contact.form');
     Route::post('send-form', [App\Http\Controllers\ContactFormController::class, 'send'])->name('contact.send');
     Route::get('/search', [App\Http\Controllers\AutoCompleteController::class, 'index'])->name('search');
     Route::get('/autocomplete', [App\Http\Controllers\AutoCompleteController::class, 'autocomplete'])->name('autocomplete');
-    // Route::get('/editar{$id}', [App\Http\Controllers\NotaController::class, 'editar'])->name('notas.editar');
     // Route::put('/editar{$id}', [App\Http\Controllers\NotaController::class, 'update'])->name('notas.update');
     // Route::delete('/eliminar{$id}', [App\Http\Controllers\NotaController::class, 'delete'])->name('notas.eliminar');
 });

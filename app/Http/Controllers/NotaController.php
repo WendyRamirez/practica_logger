@@ -28,7 +28,7 @@ class NotaController extends Controller
      */
     public function create()
     {
-        return view('notas.agregar');
+        return view('notas.crear');
     }
 
     /**
@@ -39,6 +39,10 @@ class NotaController extends Controller
      */
     public function store(Request $request)
     {
+        $request->validate([
+            'nombre' => 'required',
+            'descripcion' => 'required'
+        ]);
         $nota = new Nota();
         $nota->nombre = $request->nombre;
         $nota->descripcion = $request->descripcion;
@@ -67,7 +71,8 @@ class NotaController extends Controller
      */
     public function edit($id)
     {
-        //
+        $editar = Nota::findOrFail($id);
+        return view('notas.editar', compact('editar'));
     }
 
     /**
@@ -79,7 +84,11 @@ class NotaController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $nota = Nota::findOrFail($id);
+        $nota->nombre = $request->nombre;
+        $nota->descripcion = $request->descripcion;
+        $nota->save();
+        return back()->with('mensaje', 'Detalle editado!');
     }
 
     /**
@@ -90,7 +99,10 @@ class NotaController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $notadelete = Nota::findOrFail($id);
+        $notadelete->delete();
+    
+        return back()->with('mensaje', 'Nota Eliminada');
     }
 
     public function __construct()

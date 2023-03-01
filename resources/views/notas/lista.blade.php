@@ -29,9 +29,24 @@
     <div class="card-body">
       <form name="autocomplete-textbox" id="autocomplete-textbox" method="" action="#">
        @csrf
+       @error('nombre')
+       <div class="alert alert-danger alert-dismissible fade show" role="alert">
+         Campo nombre requerido
+         <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+           <span aria-hidden="true">&times;</span>
+         </button>
+       </div>
+       @enderror @if ($errors->has('descripcion'))
+       <div class="alert alert-danger alert-dismissible fade show" role="alert">
+         Campo descripcion requerido
+         <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+           <span aria-hidden="true">&times;</span>
+         </button>
+       </div>
+       @endif
  
         <div class="form-group">
-          <label for="exampleInputEmail1">Search Note By Name</label>
+          <label for="exampleInputEmail1">Buscador de notas</label>
           <select name="tipo" class="form-control mr-sm-2" id="exampleFormControlSelect1">
               <option>Buscar por tipo</option>
               <option>nombre</option>
@@ -43,55 +58,63 @@
             <form class="form-inline">
                 <input type="search" id="nombre" name="nombre" class="form-control">
           </form>
-          <div class="container-top mt-4">
-            <button class="btn mt-4 btn-outline-success my-2 my-sm-0" type="submit">Buscar</button>
+          <div class="container-top mt-4 text-center d-grid gap-2">
+            <button class="btn btn-lg btn-outline-primary my-2 my-sm-0" type="submit">Buscar</button>
         </div>
       </form>
     </div>
   </div>
-   
-</div>  
-  <script src="{{ asset('auto.js') }}"></script>
-</body>
- 
-<br><br>
-</html>
-    <div class="row justify-content-center">
-        <div class="col-md-8">
-            <div class="card">
-                <div class="card-header d-flex justify-content-between align-items-center">
-                    <span>Lista de Notas para {{auth()->user()->name}}</span>
-                    <a href="/notas/create" class="btn btn-primary btn-sm">Nueva Nota</a>
-                </div>
+  <div class="row justify-content-center">
+    <div class="col-md-11">
+        <div class="card">
+            <div class="card-header d-flex justify-content-between align-items-center">
+                <span>Lista de Notas para {{auth()->user()->name}}</span>
+                <a href="/notas/create" class="btn btn-success btn-sm">Nueva Nota</a>
+            </div>
 
-                <div class="card-body">      
-                    <table class="table">
-                        <thead>
-                            <tr>
-                            <th scope="col">#</th>
-                            <th scope="col">Nombre</th>
-                            <th scope="col">Descripción</th>
-                            <th scope="col">Acción</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            @foreach ($notas as $item)
-                            <tr>
-                                <th scope="row">{{ $item->id }}</th>
-                                <td>{{ $item->nombre }}</td>
-                                <td>{{ $item->descripcion }}</td>
-                                <td>Acción</td>
-                            </tr>
-                            @endforeach
-                        </tbody>
-                    </table>
-                    {{$notas->links()}}
-                {{-- fin card body --}}
-                </div>
+            <div class="card-body">      
+                <div class="table-responsive">
+                <table class="table table-warning table-striped text-center">
+                    <thead>
+                        <tr>
+                        <th scope="col">#</th>
+                        <th scope="col">Nombre</th>
+                        <th scope="col">Descripción</th>
+                        <th scope="col">Acción</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach ($notas as $item)
+                        <tr>
+                            <th scope="row">{{ $item->id }}</th>
+                            <td>{{ $item->nombre }}</td>
+                            <td>{{ $item->descripcion }}</td>
+                            <td><a href="{{ route('notas.edit', $item) }}" class="btn btn-warning btn-sm">Editar</a>
+                                <form action="{{ route('notas.destroy', $item) }}" class="d-inline" method="POST">
+                                <button type="submit" class="btn btn-danger btn-sm">Eliminar</button>
+                                @method('DELETE')
+                                @csrf    
+                            </form>
+                            </td>
+                        </tr>
+                        @endforeach
+                    </tbody>
+                </table>
+                {{$notas->links()}}
+            {{-- fin card body --}}
+            </div>
             </div>
         </div>
     </div>
 </div>
+</div>
+</div>  
+  <script src="{{ asset('auto.js') }}"></script>
+
+<br><br>
+    
+</body>
+</html>
 @endsection 
 
 {{-- <article class="postcard light yellow">

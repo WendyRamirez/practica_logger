@@ -1,5 +1,4 @@
 @extends('layouts.app')
-
 @section('content')
 <div class="container">
     <div class="row justify-content-center">
@@ -15,19 +14,31 @@
                   @endif
                   <form method="POST" action="/notas">
                     @csrf
+                    @error('nombre')
+                        <div class="alert alert-danger">
+                            El nombre es obligatorio
+                        </div>
+                    @enderror
+
+                    @error('descripcion')
+                        <div class="alert alert-danger">
+                            La descripción es obligatoria
+                        </div>
+                    @enderror
+
                     <input
                       type="text"
                       name="nombre"
                       placeholder="Nombre"
                       class="form-control mb-2"
-                    />
+                      value="{{ old('nombre') }}">
                     <input
                       type="text"
                       name="descripcion"
                       placeholder="Descripcion"
                       class="form-control mb-2"
-                    />
-                    <button class="btn btn-primary btn-block" type="submit">Agregar</button>
+                      value="{{ old('descripcion') }}">
+                    <button class="btn btn-outline-warning btn-block" type="submit">Agregar</button>
                   </form>
                 </div>
             </div>
