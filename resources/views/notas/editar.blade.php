@@ -16,7 +16,7 @@
 
     @error('nombre')
         <div class="alert alert-danger">
-            El nombre es obligatorio >:3
+            El nombre es obligatorio
         </div>
     @enderror
 
