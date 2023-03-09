@@ -49,7 +49,8 @@ class NotaController extends Controller
         $nota->usuario = auth()->user()->email;
         $nota->save();
 
-        return back()->with('mensaje', 'Nota Agregada!');
+        // return back()->with('mensaje', 'Nota Agregada!');
+        return redirect('/notas');
     }
 
     /**
