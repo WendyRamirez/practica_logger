@@ -60,6 +60,7 @@
           </form>
           <div class="container-top mt-4 text-center d-grid gap-2">
             <button class="btn btn-lg btn-outline-primary my-2 my-sm-0" type="submit">Buscar</button>
+            <a href="{{ URL::to('/notas/pdf') }}">Convertir a PDF</a>
         </div>
       </form>
     </div>

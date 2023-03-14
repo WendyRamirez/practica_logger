@@ -38,6 +38,8 @@ Route::middleware('auth')->group(function () {
     Route::get('/notas/{nota}/editar', 'App\Http\Controllers\NotaController')->name('notas.edit');
     Route::put('/notas/{nota}', 'App\Http\Controllers\NotaController')->name('notas.update');
     Route::delete('/notas/{nota}','App\Http\Controllers\NotaController')->name('notas.destroy');
+    // Route::get('/notas/pdf', 'App\Http\Controllers\NotaController@pdf');
+    Route::get('/notas','App\Http\Controllers\NotaController')->name('notas.pdf');
     Route::get('contact', [App\Http\Controllers\ContactFormController::class, 'form'])->name('contact.form');
     Route::post('send-form', [App\Http\Controllers\ContactFormController::class, 'send'])->name('contact.send');
     Route::get('/search', [App\Http\Controllers\AutoCompleteController::class, 'index'])->name('search');

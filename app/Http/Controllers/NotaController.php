@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Nota;
+use Barryvdh\DomPDF\Facade\Pdf;
 
 
 class NotaController extends Controller
@@ -18,6 +19,11 @@ class NotaController extends Controller
         $usuarioEmail = auth()->user()->email;
         $notas = Nota::where('usuario', $usuarioEmail)->paginate(5);
         return view('notas.lista',compact('notas'));
+
+        // $usuarioEmail = auth()->user()->email;
+        // $notas = Nota::where('usuario', $usuarioEmail)->paginate(5);
+        // $pdf = PDF::loadView('notas.lista', compact('notas'));
+        // return $pdf->download('notas.pdf');
 
     }
 
@@ -109,5 +115,12 @@ class NotaController extends Controller
     public function __construct()
     {
         $this->middleware('auth');
+    }
+
+    public function pdf (Request $request){
+        $notas = Nota::all();
+        $pdf = PDF::loadView('notas.lista', $notas);
+        $pdf->save(storage_path().'_notas.pdf');
+        return $pdf->download('notas.pdf');
     }
 }
